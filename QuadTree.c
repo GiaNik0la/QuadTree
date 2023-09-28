@@ -56,5 +56,12 @@ void printTree(struct QuadTree *tree) {
 }
 
 void drawTree(struct QuadTree *tree) {
-  DrawText("Jemala", 200, 200, 50, RAYWHITE);
+  DrawRectangleLines(tree->x, tree->y, tree->w, tree->h, RAYWHITE);
+
+  if (tree->isDevided) {
+    drawTree(tree->tl);
+    drawTree(tree->tr);
+    drawTree(tree->bl);
+    drawTree(tree->br);
+  }
 }

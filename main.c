@@ -10,18 +10,17 @@ int main(void) {
 
   InitWindow(width, height, "QuadTree");
 
-//  struct QuadTree *qtree = createNode(0, 0, width, height);
-//  subdevide(qtree);
-//  subdevide(qtree->bl);
-//  printTree(qtree);
+  struct QuadTree *qtree = createNode(0, 0, width, height);
+  subdevide(qtree);
+  subdevide(qtree->bl);
 
   while (!WindowShouldClose()) {
     BeginDrawing();
       ClearBackground(BLACK);
-      drawTree(NULL);
+      drawTree(qtree);
     EndDrawing();
   }
 
-//  freeTree(qtree);
+  freeTree(qtree);
   return 0;
 }
