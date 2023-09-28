@@ -38,6 +38,9 @@ void freeTree(struct QuadTree *tree) {
 }
 
 void subdevide(struct QuadTree *node) {
+  if (node->isDevided)
+    return;
+
   node->tl = createNode(node->x, node->y, node->w/2, node->h/2);
   node->tr = createNode(node->x + node->w/2, node->y, node->w/2, node->h/2);
   node->bl = createNode(node->x, node->y + node->h/2, node->w/2, node->h/2);
@@ -58,7 +61,7 @@ void printTree(struct QuadTree *tree) {
 
 int main() {
   struct QuadTree *qtree = createNode(0, 0, 400, 400);  
-  subdevide(qtree);
+  subdevide(qtree); 
   printTree(qtree);
 
   freeTree(qtree);
