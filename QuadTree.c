@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "QuadTree.h"
 
 struct QuadTree* createNode(double x, double y, double w, double h) {

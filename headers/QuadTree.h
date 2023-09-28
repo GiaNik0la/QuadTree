@@ -1,6 +1,5 @@
 #ifndef QUAD_TREE
 #define QUAD_TREE
-#include <stdbool.h>
 
 struct QuadTree {
   double x, y, w, h;
