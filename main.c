@@ -1,14 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "headers/QuadTree.h"
+#include "include/QuadTree.h"
+#include "include/raylib.h"
 
-int main() {
-  struct QuadTree *qtree = createNode(0, 0, 400, 400);
-  subdevide(qtree);
-  subdevide(qtree->bl);
-  printTree(qtree);
+int main(void) {
+  const int width = 400;
+  const int height = 400;
 
-  freeTree(qtree);
+  InitWindow(width, height, "QuadTree");
+
+//  struct QuadTree *qtree = createNode(0, 0, width, height);
+//  subdevide(qtree);
+//  subdevide(qtree->bl);
+//  printTree(qtree);
+
+  while (!WindowShouldClose()) {
+    BeginDrawing();
+      ClearBackground(BLACK);
+      DrawText("Hello", 200, 200, 20, RAYWHITE);
+    EndDrawing();
+  }
+
+//  freeTree(qtree);
   return 0;
 }

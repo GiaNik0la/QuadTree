@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "headers/QuadTree.h"
+#include "include/QuadTree.h"
+#include "include/raylib.h"
 
 struct QuadTree* createNode(double x, double y, double w, double h) {
   struct QuadTree *node = malloc(sizeof(struct QuadTree));
