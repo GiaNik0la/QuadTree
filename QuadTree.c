@@ -1,12 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-
-struct QuadTree {
-  double x, y, w, h;
-  struct QuadTree *tl, *tr, *bl, *br; 
-  bool isDevided;
-};
+#include "QuadTree.h"
 
 struct QuadTree* createNode(double x, double y, double w, double h) {
   struct QuadTree *node = malloc(sizeof(struct QuadTree));
@@ -57,13 +51,4 @@ void printTree(struct QuadTree *tree) {
     printTree(tree->bl);
     printTree(tree->br);
   }
-}
-
-int main() {
-  struct QuadTree *qtree = createNode(0, 0, 400, 400);  
-  subdevide(qtree); 
-  printTree(qtree);
-
-  freeTree(qtree);
-  return 0;
 }
