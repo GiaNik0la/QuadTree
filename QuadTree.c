@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "QuadTree.h"
+#include "headers/QuadTree.h"
 
 struct QuadTree* createNode(double x, double y, double w, double h) {
   struct QuadTree *node = malloc(sizeof(struct QuadTree));

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "QuadTree.h"
+#include "headers/QuadTree.h"
 
 int main() {
   struct QuadTree *qtree = createNode(0, 0, 400, 400);
