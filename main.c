@@ -18,7 +18,7 @@ int main(void) {
   while (!WindowShouldClose()) {
     BeginDrawing();
       ClearBackground(BLACK);
-      DrawText("Hello", 200, 200, 20, RAYWHITE);
+      drawTree(NULL);
     EndDrawing();
   }
 

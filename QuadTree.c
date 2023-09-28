@@ -54,3 +54,7 @@ void printTree(struct QuadTree *tree) {
     printTree(tree->br);
   }
 }
+
+void drawTree(struct QuadTree *tree) {
+  DrawText("Jemala", 200, 200, 50, RAYWHITE);
+}

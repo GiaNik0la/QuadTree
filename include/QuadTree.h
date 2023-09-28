@@ -11,5 +11,6 @@ struct QuadTree* createNode(double x, double y, double w, double h);
 void freeTree(struct QuadTree *tree);
 void subdevide(struct QuadTree *node);
 void printTree(struct QuadTree *tree);
+void drawTree(struct QuadTree *tree);
 
 #endif
