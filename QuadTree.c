@@ -26,7 +26,6 @@ struct QuadTree* createNode(double x, double y, double w, double h, int capacity
 }
 
 void freeTree(struct QuadTree *tree) {
-  free(tree->points);
   if (tree->isDevided) {
     freeTree(tree->tl);
     freeTree(tree->tr);
@@ -34,6 +33,7 @@ void freeTree(struct QuadTree *tree) {
     freeTree(tree->br);
   }
 
+  freeList(tree->points);
   free(tree);
 }
 
