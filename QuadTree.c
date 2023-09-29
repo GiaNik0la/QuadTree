@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "include/QuadTree.h"
+#include "include/Point.h"
 #include "include/raylib.h"
 
-struct QuadTree* createNode(double x, double y, double w, double h) {
-  struct QuadTree *node = malloc(sizeof(struct QuadTree));
+struct QuadTree* createNode(double x, double y, double w, double h, int capacity) {
+  struct QuadTree *node = (struct QuadTree*)malloc(sizeof(struct QuadTree));
 
   node->tl = NULL;
   node->tr = NULL;
@@ -17,12 +18,15 @@ struct QuadTree* createNode(double x, double y, double w, double h) {
   node->w = w;
   node->h = h;
 
+  node->capacity = capacity;
+
   node->isDevided = false;
 
   return node;
 }
 
 void freeTree(struct QuadTree *tree) {
+  free(tree->points);
   if (tree->isDevided) {
     freeTree(tree->tl);
     freeTree(tree->tr);
@@ -37,10 +41,10 @@ void subdevide(struct QuadTree *node) {
   if (node->isDevided)
     return;
 
-  node->tl = createNode(node->x, node->y, node->w/2, node->h/2);
-  node->tr = createNode(node->x + node->w/2, node->y, node->w/2, node->h/2);
-  node->bl = createNode(node->x, node->y + node->h/2, node->w/2, node->h/2);
-  node->br = createNode(node->x + node->w/2, node->y + node->h/2, node->w/2, node->h/2);
+  node->tl = createNode(node->x, node->y, node->w/2, node->h/2, node->capacity);
+  node->tr = createNode(node->x + node->w/2, node->y, node->w/2, node->h/2, node->capacity);
+  node->bl = createNode(node->x, node->y + node->h/2, node->w/2, node->h/2, node->capacity);
+  node->br = createNode(node->x + node->w/2, node->y + node->h/2, node->w/2, node->h/2, node->capacity);
   node->isDevided = true;
 }
 
@@ -63,5 +67,20 @@ void drawTree(struct QuadTree *tree) {
     drawTree(tree->tr);
     drawTree(tree->bl);
     drawTree(tree->br);
+  }
+}
+
+void insertPoint(struct QuadTree *tree, struct Point p) {
+  if (getSize(tree->points) < tree->capacity &&
+      p.x < tree->w && p.x > tree->x &&
+      p.y < tree->h && p.y > tree->y) {
+    insertLast(&tree->points, p);
+  } else {
+    if (!tree->isDevided) subdevide(tree);
+
+    insertPoint(tree->tl, p);
+    insertPoint(tree->tr, p);
+    insertPoint(tree->bl, p);
+    insertPoint(tree->br, p);
   }
 }
