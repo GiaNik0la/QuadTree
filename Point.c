@@ -14,8 +14,8 @@ int getSize(struct node *head) {
   struct node *tmp = head;
   int count = 0;
   while (tmp) {
+    ++count;
     tmp = tmp->next;
-    count++;
   }
   return count;
 }
@@ -29,15 +29,14 @@ void insert(struct node **n, struct Point p) {
 
 void insertFirst(struct node **head, struct Point p) {
   struct node *new = (struct node*)malloc(sizeof(struct node));
-  new->next = (*head);
   new->val = p;
+  new->next = (*head);
   (*head) = new;
 }
 
 void insertLast(struct node **head, struct Point p) {
   struct node *temp = end(*head);
   if (temp) {
-    while (temp->next) temp = temp->next;
     insert(&temp, p);  
   } else {
     insertFirst(head, p);
@@ -60,11 +59,18 @@ void deleteLast(struct node **head) {
   free(tmp);
 }
 
+void printList(struct node *head) {
+  struct node *tmp = head;
+  while (tmp) {
+    printf("(x: %d, y: %d) ----> ", tmp->val.x, tmp->val.y);
+    tmp = tmp->next;
+  }
+  printf("\n");
+}
+
 void freeList(struct node *head) {
-  struct node *temp;
- 
   while (head) {
-    temp = head;
+    struct node *temp = head;
     head = head->next;
     free(temp);
   }

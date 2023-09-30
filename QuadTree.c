@@ -22,6 +22,8 @@ struct QuadTree* createNode(double x, double y, double w, double h, int capacity
 
   node->isDevided = false;
 
+  node->points = NULL;
+
   return node;
 }
 
@@ -50,6 +52,7 @@ void subdevide(struct QuadTree *node) {
 
 void printTree(struct QuadTree *tree) {
   printf("x: %f, y: %f, w: %f, h: %f\n", tree->x, tree->y, tree->w, tree->h);
+  printList(tree->points);
   
   if (tree->isDevided) {
     printTree(tree->tl);
@@ -71,12 +74,12 @@ void drawTree(struct QuadTree *tree) {
 }
 
 void insertPoint(struct QuadTree *tree, struct Point p) {
-  if (getSize(tree->points) < tree->capacity &&
-      p.x < tree->w && p.x > tree->x &&
-      p.y < tree->h && p.y > tree->y) {
-    insertLast(&tree->points, p);
+  if (getSize(tree->points) < tree->capacity) {
+    if (p.x < tree->w && p.x > tree->x &&
+        p.y < tree->h && p.y > tree->y)
+      insertLast(&tree->points, p);
   } else {
-    if (!tree->isDevided) subdevide(tree);
+    subdevide(tree);
 
     insertPoint(tree->tl, p);
     insertPoint(tree->tr, p);
