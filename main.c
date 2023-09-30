@@ -13,12 +13,6 @@ int main(void) {
   InitWindow(width, height, "QuadTree");
 
   struct QuadTree *qtree = createNode(0, 0, width, height, 4);
-/*
-  for (int i = 0; i < 50; i++) {
-    struct Point p = {i, i};
-    insertPoint(qtree, p);
-  }
-*/
 
   while (!WindowShouldClose()) {
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
