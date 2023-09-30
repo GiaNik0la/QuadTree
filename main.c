@@ -13,7 +13,7 @@ int main(void) {
 
   struct QuadTree *qtree = createNode(0, 0, width, height, 4);
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 50; i++) {
     struct Point p = {i, i};
     insertPoint(qtree, p);
   }

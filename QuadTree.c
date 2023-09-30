@@ -75,8 +75,10 @@ void drawTree(struct QuadTree *tree) {
 
 void insertPoint(struct QuadTree *tree, struct Point p) {
   if (getSize(tree->points) < tree->capacity) {
-    if (p.x < tree->w && p.x > tree->x &&
-        p.y < tree->h && p.y > tree->y)
+    if (p.x < tree->x + tree->w &&
+        p.x > tree->x &&
+        p.y < tree->y + tree->h &&
+        p.y > tree->y)
       insertLast(&tree->points, p);
   } else {
     subdevide(tree);
