@@ -14,7 +14,7 @@ int main(void) {
 
   struct QuadTree *qtree = createNode(0, 0, width, height, 4);
 
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1000; i++) {
     struct Point p;
     p.x = rand() % (width - 1) + 1;
     p.y = rand() % (height - 1) + 1;
@@ -22,14 +22,19 @@ int main(void) {
   }
 
   struct node *list = NULL;
+  
+  struct Rect range = {0, 0, rand() % 200, rand() % 200};
 
+  bool drawRect = false;
   while (!WindowShouldClose()) {
+    range.x = GetMousePosition().x - range.w/2;
+    range.y = GetMousePosition().y - range.h/2;
 
-    struct Rect range = {GetMousePosition().x, GetMousePosition().y, 107, 72};
+    if (IsKeyPressed(KEY_TAB)) drawRect = !drawRect;
 
     BeginDrawing();
       ClearBackground(BLACK);
-      drawTree(qtree);
+      drawTree(qtree, drawRect);
       DrawRectangleLines(range.x, range.y, range.w, range.h, GREEN);
       list = query(qtree, range);
       drawPoints(list);

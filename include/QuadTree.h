@@ -21,9 +21,9 @@ struct QuadTree* createNode(double x, double y, double w, double h, int capacity
 void freeTree(struct QuadTree *tree);
 void subdevide(struct QuadTree *node);
 void printTree(struct QuadTree *tree);
-void drawTree(struct QuadTree *tree);
+void drawTree(struct QuadTree *tree, bool drawRect);
 void insertPoint(struct QuadTree *tree, struct Point p);
 bool intersects(struct QuadTree *tree, struct Rect range);
-struct node* query();
+struct node* query(struct QuadTree *tree, struct Rect range);
 
 #endif

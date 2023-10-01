@@ -69,14 +69,14 @@ void printTree(struct QuadTree *tree) {
   }
 }
 
-void drawTree(struct QuadTree *tree) {
-  DrawRectangleLines(tree->x, tree->y, tree->w, tree->h, RAYWHITE);
+void drawTree(struct QuadTree *tree, bool drawRect) {
+  if (drawRect) DrawRectangleLines(tree->x, tree->y, tree->w, tree->h, RAYWHITE);
 
   if (tree->isDevided) {
-    drawTree(tree->tl);
-    drawTree(tree->tr);
-    drawTree(tree->bl);
-    drawTree(tree->br);
+    drawTree(tree->tl, drawRect);
+    drawTree(tree->tr, drawRect);
+    drawTree(tree->bl, drawRect);
+    drawTree(tree->br, drawRect);
   }
 
   struct node *tmp = tree->points;
