@@ -31,6 +31,12 @@ int main(void) {
     range.y = GetMousePosition().y - range.h/2;
 
     if (IsKeyPressed(KEY_TAB)) drawRect = !drawRect;
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+      struct Point p;
+      p.x = GetMousePosition().x + rand() % 20 - 10;
+      p.y = GetMousePosition().y + rand() % 20 - 10;
+      insertPoint(qtree, p);
+    }
 
     BeginDrawing();
       struct Color c = {10, 10, 10, 255};
