@@ -1,7 +1,14 @@
 # QuadTree
-I made quad tree in C. if you move your mouse around, a rectangle will follow and highlight every point within it.
+I made quad tree in C. if you move your mouse around, a rectangle will follow and highlight every point within it and it does this with quad tree.
 
 ![Game](giphy.gif) [](giphy.gif)
+
+# Basic idea on how this works
+### What is a QuadTree
+QuadTree is basically just a big rectangle which can devide into 4 rectangles if it contains too much objects. for example: say the capacity of the QuadTree is 4. and it already contains 3 points. if I add another point the tree will devide into 4.
+
+### How does the rectangle find points within
+The program basically checks only the parts that intersect with rectangle. this reduces the number of points we have to check.
 
 # Requirements
 
