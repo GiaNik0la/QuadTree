@@ -7,6 +7,8 @@ I made quad tree in C. if you move your mouse around, a rectangle will follow an
 ### What is a QuadTree
 QuadTree is basically just a big rectangle which can devide into 4 rectangles if it contains too much objects. for example: say the capacity of the QuadTree is 4. and it already contains 3 points. if I add another point the tree will devide into 4.
 
+### How the rectangle finds points within
+The program only checks the parts that rectangle is overlaping. this reduces the amount of points to check
 
 # Requirements
 
