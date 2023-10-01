@@ -3,6 +3,12 @@
 
 #include "Point.h"
 
+struct Rect {
+  double x, y, w, h;
+};
+
+bool rectContains(struct Rect r, struct Point p);
+
 struct QuadTree {
   double x, y, w, h;
   int capacity;
@@ -17,5 +23,7 @@ void subdevide(struct QuadTree *node);
 void printTree(struct QuadTree *tree);
 void drawTree(struct QuadTree *tree);
 void insertPoint(struct QuadTree *tree, struct Point p);
+bool intersects(struct QuadTree *tree, struct Rect range);
+struct node* query();
 
 #endif

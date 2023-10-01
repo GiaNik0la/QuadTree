@@ -2,7 +2,7 @@
 #define POINT
 
 struct Point {
-  int x, y;
+  double x, y;
 };
 
 struct node {
@@ -17,7 +17,9 @@ void insertFirst(struct node **head, struct Point p);
 void insertLast(struct node **head, struct Point p);
 void deleteFirst(struct node **head);
 void deleteLast(struct node **head);
+void concat(struct node **head_one, struct node *head_two);
 void printList(struct node *head);
+void drawPoints(struct node *head);
 void freeList(struct node *head);
 
 #endif

@@ -14,18 +14,29 @@ int main(void) {
 
   struct QuadTree *qtree = createNode(0, 0, width, height, 4);
 
+  for (int i = 0; i < 500; i++) {
+    struct Point p;
+    p.x = rand() % (width - 1) + 1;
+    p.y = rand() % (height - 1) + 1;
+    insertPoint(qtree, p);
+  }
+
+  struct node *list = NULL;
+
   while (!WindowShouldClose()) {
-    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-      struct Point p = {round(GetMousePosition().x), round(GetMousePosition().y)};
-      insertPoint(qtree, p);
-    }
+
+    struct Rect range = {GetMousePosition().x, GetMousePosition().y, 107, 72};
 
     BeginDrawing();
       ClearBackground(BLACK);
       drawTree(qtree);
+      DrawRectangleLines(range.x, range.y, range.w, range.h, GREEN);
+      list = query(qtree, range);
+      drawPoints(list);
     EndDrawing();
   }
 
   freeTree(qtree);
+  freeList(list);
   return 0;
 }

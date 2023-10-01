@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "include/Point.h"
+#include "include/raylib.h"
 
 struct node* end(struct node *head) {
   if (head == NULL) return NULL;
@@ -59,13 +60,30 @@ void deleteLast(struct node **head) {
   free(tmp);
 }
 
+void concat(struct node **head_one, struct node *head_two) {
+  struct node *endd = end(*head_one);
+  if (endd) {
+    endd->next = head_two;
+  } else {
+    *(head_one) = head_two;
+  }
+}
+
 void printList(struct node *head) {
   struct node *tmp = head;
   while (tmp) {
-    printf("(x: %d, y: %d) ----> ", tmp->val.x, tmp->val.y);
+    printf("(x: %f, y: %f) ----> ", tmp->val.x, tmp->val.y);
     tmp = tmp->next;
   }
   printf("\n");
+}
+
+void drawPoints(struct node *head) {
+  struct node *tmp = head;
+  while (tmp) {
+    DrawCircle(tmp->val.x, tmp->val.y, 3, GREEN);
+    tmp = tmp->next;
+  }
 }
 
 void freeList(struct node *head) {

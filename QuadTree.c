@@ -5,6 +5,13 @@
 #include "include/Point.h"
 #include "include/raylib.h"
 
+bool rectContains(struct Rect r, struct Point p) {
+  return !(p.x < r.x ||
+           p.x > r.x + r.w ||
+           p.y < r.y ||
+           p.y > r.y + r.h);
+}
+
 struct QuadTree* createNode(double x, double y, double w, double h, int capacity) {
   struct QuadTree *node = (struct QuadTree*)malloc(sizeof(struct QuadTree));
 
@@ -71,15 +78,24 @@ void drawTree(struct QuadTree *tree) {
     drawTree(tree->bl);
     drawTree(tree->br);
   }
+
+  struct node *tmp = tree->points;
+  while (tmp) {
+    DrawCircle(tmp->val.x, tmp->val.y, 2, WHITE);
+    tmp = tmp->next;
+  }
 }
 
 void insertPoint(struct QuadTree *tree, struct Point p) {
+  bool conatins = p.x < tree->x + tree->w &&
+                  p.x > tree->x &&
+                  p.y < tree->y + tree->h &&
+                  p.y > tree->y;
+
+  if (!conatins) return;
+
   if (getSize(tree->points) < tree->capacity) {
-    if (p.x < tree->x + tree->w &&
-        p.x > tree->x &&
-        p.y < tree->y + tree->h &&
-        p.y > tree->y)
-      insertLast(&tree->points, p);
+    insertLast(&tree->points, p);
   } else {
     subdevide(tree);
 
@@ -88,4 +104,33 @@ void insertPoint(struct QuadTree *tree, struct Point p) {
     insertPoint(tree->bl, p);
     insertPoint(tree->br, p);
   }
+}
+
+bool intersects(struct QuadTree *tree, struct Rect range) {
+  return !(range.x > tree->x + tree->w ||
+           range.x + range.w < tree->x ||
+           range.y > tree->y + tree->h ||
+           range.y + range.h < tree->y );
+}
+
+struct node* query(struct QuadTree *tree, struct Rect range) {
+  struct node* pointsInRange = NULL;
+  if (!intersects(tree, range)) return pointsInRange;
+
+  struct node *tmp = tree->points;
+  while (tmp) {
+    if (rectContains(range, tmp->val)) {
+      insertLast(&pointsInRange, tmp->val);
+    }
+    tmp = tmp->next;
+  }
+
+  if (tree->isDevided) {
+    concat(&pointsInRange, query(tree->tl, range));
+    concat(&pointsInRange, query(tree->tr, range));
+    concat(&pointsInRange, query(tree->bl, range));
+    concat(&pointsInRange, query(tree->br, range));
+  }
+
+  return pointsInRange;
 }
