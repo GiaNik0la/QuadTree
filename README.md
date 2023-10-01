@@ -27,3 +27,4 @@ gcc main.c QuadTree.c Point.c -o out -O1 -Wall -std=c99 -Wno-missing-braces -I .
 # Controls
 
 - to reveal the quad tree you press <kbd>Tab</kbd>
+- to spawn points click <kbd>LMB</kbd> (you cannot just hold it you need to click)
