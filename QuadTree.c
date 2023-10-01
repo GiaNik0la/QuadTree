@@ -81,7 +81,7 @@ void drawTree(struct QuadTree *tree, bool drawRect) {
 
   struct node *tmp = tree->points;
   while (tmp) {
-    DrawCircle(tmp->val.x, tmp->val.y, 2, WHITE);
+    DrawCircle(tmp->val.x, tmp->val.y, 2, RAYWHITE);
     tmp = tmp->next;
   }
 }
