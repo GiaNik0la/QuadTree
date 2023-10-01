@@ -6,7 +6,7 @@ I made quad tree in C. if you move your mouse around, a rectangle will follow an
 # Requirements
 
 ### You need to install:
-- Ralib: https://www.raylib.com/
+- Raylib: https://www.raylib.com/
 
 # How to run
 
