@@ -13,7 +13,7 @@ The program only checks the parts that rectangle is overlaping. this reduces the
 # Requirements
 
 ### You need to install:
-- Ralib: https://www.raylib.com/
+- Raylib: https://www.raylib.com/
 
 # How to run
 
