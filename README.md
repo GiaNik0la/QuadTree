@@ -1,5 +1,5 @@
 # QuadTree
-I made quad tree in C. if you move your mouse around, a rectangle will follow and highlight every point within it.
+I made quad tree in C. if you move your mouse around, a rectangle will follow and highlight every point within it and to do that more efficiently it uses quad tree.
 
 ![Game](giphy.gif) [](giphy.gif)
 
