@@ -7,8 +7,8 @@
 #include "include/raylib.h"
 
 int main(void) {
-  const int width = 400;
-  const int height = 400;
+  const int width = 800;
+  const int height = 800;
 
   InitWindow(width, height, "QuadTree");
 
@@ -23,7 +23,7 @@ int main(void) {
 
   struct node *list = NULL;
   
-  struct Rect range = {0, 0, rand() % 100, rand() % 100};
+  struct Rect range = {0, 0, rand() % 100 + 100, rand() % 100 + 100};
 
   bool drawRect = false;
   while (!WindowShouldClose()) {
