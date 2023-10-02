@@ -20,10 +20,10 @@ struct QuadTree* createNode(double x, double y, double w, double h, int capacity
   node->bl = NULL;
   node->br = NULL;
 
-  node->x = x;
-  node->y = y;
-  node->w = w;
-  node->h = h;
+  node->bounds.x = x;
+  node->bounds.y = y;
+  node->bounds.w = w;
+  node->bounds.h = h;
 
   node->capacity = capacity;
 
@@ -50,15 +50,15 @@ void subdevide(struct QuadTree *node) {
   if (node->isDevided)
     return;
 
-  node->tl = createNode(node->x, node->y, node->w/2, node->h/2, node->capacity);
-  node->tr = createNode(node->x + node->w/2, node->y, node->w/2, node->h/2, node->capacity);
-  node->bl = createNode(node->x, node->y + node->h/2, node->w/2, node->h/2, node->capacity);
-  node->br = createNode(node->x + node->w/2, node->y + node->h/2, node->w/2, node->h/2, node->capacity);
+  node->tl = createNode(node->bounds.x, node->bounds.y, node->bounds.w/2, node->bounds.h/2, node->capacity);
+  node->tr = createNode(node->bounds.x + node->bounds.w/2, node->bounds.y, node->bounds.w/2, node->bounds.h/2, node->capacity);
+  node->bl = createNode(node->bounds.x, node->bounds.y + node->bounds.h/2, node->bounds.w/2, node->bounds.h/2, node->capacity);
+  node->br = createNode(node->bounds.x + node->bounds.w/2, node->bounds.y + node->bounds.h/2, node->bounds.w/2, node->bounds.h/2, node->capacity);
   node->isDevided = true;
 }
 
 void printTree(struct QuadTree *tree) {
-  printf("x: %f, y: %f, w: %f, h: %f\n", tree->x, tree->y, tree->w, tree->h);
+  printf("x: %f, y: %f, w: %f, h: %f\n", tree->bounds.x, tree->bounds.y, tree->bounds.w, tree->bounds.h);
   printList(tree->points);
   
   if (tree->isDevided) {
@@ -70,7 +70,7 @@ void printTree(struct QuadTree *tree) {
 }
 
 void drawTree(struct QuadTree *tree, bool drawRect) {
-  if (drawRect) DrawRectangleLines(tree->x, tree->y, tree->w, tree->h, RAYWHITE);
+  if (drawRect) DrawRectangleLines(tree->bounds.x, tree->bounds.y, tree->bounds.w, tree->bounds.h, RAYWHITE);
 
   if (tree->isDevided) {
     drawTree(tree->tl, drawRect);
@@ -87,10 +87,10 @@ void drawTree(struct QuadTree *tree, bool drawRect) {
 }
 
 void insertPoint(struct QuadTree *tree, struct Point p) {
-  bool conatins = p.x < tree->x + tree->w &&
-                  p.x > tree->x &&
-                  p.y < tree->y + tree->h &&
-                  p.y > tree->y;
+  bool conatins = p.x < tree->bounds.x + tree->bounds.w &&
+                  p.x > tree->bounds.x &&
+                  p.y < tree->bounds.y + tree->bounds.h &&
+                  p.y > tree->bounds.y;
 
   if (!conatins) return;
 
@@ -107,10 +107,10 @@ void insertPoint(struct QuadTree *tree, struct Point p) {
 }
 
 bool intersects(struct QuadTree *tree, struct Rect range) {
-  return !(range.x > tree->x + tree->w ||
-           range.x + range.w < tree->x ||
-           range.y > tree->y + tree->h ||
-           range.y + range.h < tree->y );
+  return !(range.x > tree->bounds.x + tree->bounds.w ||
+           range.x + range.w < tree->bounds.x ||
+           range.y > tree->bounds.y + tree->bounds.h ||
+           range.y + range.h < tree->bounds.y );
 }
 
 struct node* query(struct QuadTree *tree, struct Rect range) {

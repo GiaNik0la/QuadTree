@@ -10,7 +10,7 @@ struct Rect {
 bool rectContains(struct Rect r, struct Point p);
 
 struct QuadTree {
-  double x, y, w, h;
+  struct Rect bounds;
   int capacity;
   struct QuadTree *tl, *tr, *bl, *br; 
   struct node *points;
