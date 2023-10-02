@@ -101,16 +101,16 @@ void insertPoint(struct QuadTree *tree, struct Point p) {
   }
 }
 
-bool intersects(struct QuadTree *tree, struct Rect range) {
-  return !(range.x > tree->bounds.x + tree->bounds.w ||
-           range.x + range.w < tree->bounds.x ||
-           range.y > tree->bounds.y + tree->bounds.h ||
-           range.y + range.h < tree->bounds.y );
+bool intersects(struct Rect range_one, struct Rect range_two) {
+  return !(range_two.x > range_one.x + range_one.w ||
+           range_two.x + range_two.w < range_one.x ||
+           range_two.y > range_one.y + range_one.h ||
+           range_two.y + range_two.h < range_one.y );
 }
 
 struct node* query(struct QuadTree *tree, struct Rect range) {
   struct node* pointsInRange = NULL;
-  if (!intersects(tree, range)) return pointsInRange;
+  if (!intersects(tree->bounds, range)) return pointsInRange;
 
   struct node *tmp = tree->points;
   while (tmp) {

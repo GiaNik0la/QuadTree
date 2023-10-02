@@ -23,7 +23,7 @@ void subdevide(struct QuadTree *node);
 void printTree(struct QuadTree *tree);
 void drawTree(struct QuadTree *tree, bool drawRect);
 void insertPoint(struct QuadTree *tree, struct Point p);
-bool intersects(struct QuadTree *tree, struct Rect range);
+bool intersects(struct Rect range_one, struct Rect range_two);
 struct node* query(struct QuadTree *tree, struct Rect range);
 
 #endif
