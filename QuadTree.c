@@ -87,12 +87,7 @@ void drawTree(struct QuadTree *tree, bool drawRect) {
 }
 
 void insertPoint(struct QuadTree *tree, struct Point p) {
-  bool conatins = p.x < tree->bounds.x + tree->bounds.w &&
-                  p.x > tree->bounds.x &&
-                  p.y < tree->bounds.y + tree->bounds.h &&
-                  p.y > tree->bounds.y;
-
-  if (!conatins) return;
+  if (!rectContains(tree->bounds, p)) return;
 
   if (getSize(tree->points) < tree->capacity) {
     insertLast(&tree->points, p);
