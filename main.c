@@ -23,14 +23,19 @@ int main(void) {
 
   struct node *list = NULL;
   
-  struct Rect range = {0, 0, rand() % 100 + 100, rand() % 100 + 100};
+  struct Circle range = {0, 0, rand() % 100 + 100};
+  struct Rect range_two = {0, 0, rand() % 100 + 100, rand() % 100 + 100};
 
   bool drawRect = false;
+  bool drawCircle = false;
   while (!WindowShouldClose()) {
-    range.x = GetMousePosition().x - range.w/2;
-    range.y = GetMousePosition().y - range.h/2;
+    range.x = GetMousePosition().x;
+    range.y = GetMousePosition().y;
+    range_two.x = GetMousePosition().x - range_two.w/2;
+    range_two.y = GetMousePosition().y - range_two.h/2;
 
     if (IsKeyPressed(KEY_TAB)) drawRect = !drawRect;
+    if (IsKeyPressed(KEY_SPACE)) drawCircle = !drawCircle;
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
       struct Point p;
       p.x = GetMousePosition().x + rand() % 20 - 10;
@@ -42,8 +47,14 @@ int main(void) {
       struct Color c = {10, 10, 10, 255};
       ClearBackground(c);
       drawTree(qtree, drawRect);
-      DrawRectangleLines(range.x, range.y, range.w, range.h, GREEN);
-      list = query(qtree, range);
+      if (drawCircle) {
+        DrawCircleLines(range.x, range.y, range.r, GREEN);
+        list = queryCircle(qtree, range);
+      } else {
+        DrawRectangleLines(range_two.x, range_two.y, range_two.w, range_two.h, GREEN);
+        list = query(qtree, range_two);
+      }
+
       drawPoints(list);
     EndDrawing();
   }
