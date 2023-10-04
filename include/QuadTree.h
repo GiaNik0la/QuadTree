@@ -3,10 +3,17 @@
 
 #include "Point.h"
 
+struct Circle {
+  double x, y, r;
+};
+
 struct Rect {
   double x, y, w, h;
 };
 
+bool circleIntersects(struct Circle range_one, struct Rect range_two);
+bool circleContains(struct Circle r, struct Point p);
+bool intersects(struct Rect range_one, struct Rect range_two);
 bool rectContains(struct Rect r, struct Point p);
 
 struct QuadTree {
@@ -23,7 +30,7 @@ void subdevide(struct QuadTree *node);
 void printTree(struct QuadTree *tree);
 void drawTree(struct QuadTree *tree, bool drawRect);
 void insertPoint(struct QuadTree *tree, struct Point p);
-bool intersects(struct Rect range_one, struct Rect range_two);
 struct node* query(struct QuadTree *tree, struct Rect range);
+struct node* queryCircle(struct QuadTree *tree, struct Circle range);
 
 #endif

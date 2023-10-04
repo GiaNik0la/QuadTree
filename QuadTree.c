@@ -12,6 +12,13 @@ bool rectContains(struct Rect r, struct Point p) {
            p.y > r.y + r.h);
 }
 
+bool circleContains(struct Circle r, struct Point p) {
+  double distX = p.x - r.x;
+  double distY = p.y - r.y;
+  double distSqr = distX*distX + distY*distY;
+  return (distSqr < r.r*r.r);
+}
+
 struct QuadTree* createNode(double x, double y, double w, double h, int capacity) {
   struct QuadTree *node = (struct QuadTree*)malloc(sizeof(struct QuadTree));
 
@@ -81,7 +88,7 @@ void drawTree(struct QuadTree *tree, bool drawRect) {
 
   struct node *tmp = tree->points;
   while (tmp) {
-    DrawCircle(tmp->val.x, tmp->val.y, 2, RAYWHITE);
+    DrawCircle(tmp->val.x, tmp->val.y, 3, RAYWHITE);
     tmp = tmp->next;
   }
 }
@@ -108,6 +115,22 @@ bool intersects(struct Rect range_one, struct Rect range_two) {
            range_two.y + range_two.h < range_one.y );
 }
 
+bool circleIntersects(struct Circle range_one, struct Rect range_two) {
+  double cdx = abs(range_one.x - (range_two.x + range_two.w/2));
+  double cdy = abs(range_one.y - (range_two.y + range_two.h/2));
+
+  if (cdx > (range_two.w/2 + range_one.r)) return false;
+  if (cdy > (range_two.h/2 + range_one.r)) return false;
+
+  if (cdx <= range_two.w/2) return true;
+  if (cdy <= range_two.h/2) return true;
+
+  double cornerDistSq = (cdx - range_two.w/2)*(cdx - range_two.w/2) +
+                        (cdy - range_two.h/2)*(cdy - range_two.h/2);
+
+  return (cornerDistSq <= range_one.r*range_one.r);
+}
+
 struct node* query(struct QuadTree *tree, struct Rect range) {
   struct node* pointsInRange = NULL;
   if (!intersects(tree->bounds, range)) return pointsInRange;
@@ -125,6 +148,28 @@ struct node* query(struct QuadTree *tree, struct Rect range) {
     concat(&pointsInRange, query(tree->tr, range));
     concat(&pointsInRange, query(tree->bl, range));
     concat(&pointsInRange, query(tree->br, range));
+  }
+
+  return pointsInRange;
+}
+
+struct node* queryCircle(struct QuadTree *tree, struct Circle range) {
+  struct node* pointsInRange = NULL;
+  if (!circleIntersects(range, tree->bounds)) return pointsInRange;
+
+  struct node *tmp = tree->points;
+  while (tmp) {
+    if (circleContains(range, tmp->val)) {
+      insertLast(&pointsInRange, tmp->val);
+    }
+    tmp = tmp->next;
+  }
+
+  if (tree->isDevided) {
+    concat(&pointsInRange, queryCircle(tree->tl, range));
+    concat(&pointsInRange, queryCircle(tree->tr, range));
+    concat(&pointsInRange, queryCircle(tree->bl, range));
+    concat(&pointsInRange, queryCircle(tree->br, range));
   }
 
   return pointsInRange;
