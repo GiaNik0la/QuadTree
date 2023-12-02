@@ -81,7 +81,7 @@ void printList(struct node *head) {
 void drawPoints(struct node *head) {
   struct node *tmp = head;
   while (tmp) {
-    DrawCircle(tmp->val.x, tmp->val.y, 3, GREEN);
+    DrawCircle(tmp->val.x, tmp->val.y, tmp->val.r, GREEN);
     tmp = tmp->next;
   }
 }

@@ -2,7 +2,7 @@
 #define POINT
 
 struct Point {
-  double x, y;
+  double x, y, r;
 };
 
 struct node {

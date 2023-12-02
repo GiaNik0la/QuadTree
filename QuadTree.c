@@ -5,7 +5,7 @@
 #include "include/Point.h"
 #include "include/raylib.h"
 
-bool rectContains(struct Rect r, struct Point p) {
+bool contains(struct Rect r, struct Point p) {
   return !(p.x < r.x ||
            p.x > r.x + r.w ||
            p.y < r.y ||
@@ -88,13 +88,13 @@ void drawTree(struct QuadTree *tree, bool drawRect) {
 
   struct node *tmp = tree->points;
   while (tmp) {
-    DrawCircle(tmp->val.x, tmp->val.y, 3, RAYWHITE);
+    DrawCircle(tmp->val.x, tmp->val.y, tmp->val.r, RAYWHITE);
     tmp = tmp->next;
   }
 }
 
 void insertPoint(struct QuadTree *tree, struct Point p) {
-  if (!rectContains(tree->bounds, p)) return;
+  if (!contains(tree->bounds, p)) return;
 
   if (getSize(tree->points) < tree->capacity) {
     insertLast(&tree->points, p);
@@ -137,7 +137,7 @@ struct node* query(struct QuadTree *tree, struct Rect range) {
 
   struct node *tmp = tree->points;
   while (tmp) {
-    if (rectContains(range, tmp->val)) {
+    if (contains(range, tmp->val)) {
       insertLast(&pointsInRange, tmp->val);
     }
     tmp = tmp->next;

@@ -18,6 +18,7 @@ int main(void) {
     struct Point p;
     p.x = rand() % (width - 1) + 1;
     p.y = rand() % (height - 1) + 1;
+    p.r = 3;
     insertPoint(qtree, p);
   }
 

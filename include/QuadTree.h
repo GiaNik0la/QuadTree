@@ -14,7 +14,7 @@ struct Rect {
 bool circleIntersects(struct Circle range_one, struct Rect range_two);
 bool circleContains(struct Circle r, struct Point p);
 bool intersects(struct Rect range_one, struct Rect range_two);
-bool rectContains(struct Rect r, struct Point p);
+bool contains(struct Rect r, struct Point p);
 
 struct QuadTree {
   struct Rect bounds;
